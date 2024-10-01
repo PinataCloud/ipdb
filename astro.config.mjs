@@ -5,24 +5,24 @@ import react from "@astrojs/react";
 
 import tailwind from "@astrojs/tailwind";
 
-import cloudflare from "@astrojs/cloudflare";
+import vercel from "@astrojs/vercel/serverless";
 
 // https://astro.build/config
 export default defineConfig({
-  output: "server",
+	output: "server",
 
-  vite: {
-      optimizeDeps: {
-          exclude: ["@electric-sql/pglite"],
-      },
+	vite: {
+		optimizeDeps: {
+			exclude: ["@electric-sql/pglite"],
+		},
 	},
 
-  integrations: [
-      react(),
-      tailwind({
-          applyBaseStyles: false,
-      }),
+	integrations: [
+		react(),
+		tailwind({
+			applyBaseStyles: false,
+		}),
 	],
 
-  adapter: cloudflare(),
+	adapter: vercel(),
 });

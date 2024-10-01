@@ -20,6 +20,8 @@ export default function Database() {
 	async function importDb() {
 		try {
 			const dbFile = await pinata.gateways.get(import.meta.env.PUBLIC_DB_CID);
+			//const dbFile = await fetch(import.meta.env.PUBLIC_DB_URL);
+			//const file = (await dbFile.blob()) as Blob;
 			const file = dbFile.data as Blob;
 			db = new PGlite({ loadDataDir: file });
 			const ret = await db?.query(`
