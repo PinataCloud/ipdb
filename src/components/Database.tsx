@@ -28,7 +28,7 @@ export default function Database() {
 		try {
 			setLoading(true);
 			const dbCid = await publicClient.readContract({
-				address: import.meta.env.PUBLIC_CONTRACT_ADDRESS,
+				address: import.meta.env.PUBLIC_CONTRACT_ADDRESS as `0x`,
 				abi: abi,
 				functionName: "getState",
 			});
