@@ -17,7 +17,7 @@ import { PGlite } from "@electric-sql/pglite";
 	console.log(upload);
 	const { request: contractRequest } = await publicClient.simulateContract({
 		account,
-		address: import.meta.env.PUBLIC_CONTRACT_ADDRESS,
+		address: import.meta.env.PUBLIC_CONTRACT_ADDRESS as `0x`,
 		abi: abi,
 		functionName: "update",
 		args: [`${upload.IpfsHash}`],

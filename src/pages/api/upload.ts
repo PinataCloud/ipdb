@@ -17,7 +17,7 @@ export const POST: APIRoute = async ({ request }) => {
 	const { IpfsHash } = await pinata.upload.file(file);
 	const { request: contractRequest } = await publicClient.simulateContract({
 		account,
-		address: import.meta.env.PUBLIC_CONTRACT_ADDRESS,
+		address: import.meta.env.PUBLIC_CONTRACT_ADDRESS as `0x`,
 		abi: abi,
 		functionName: "update",
 		args: [IpfsHash],
