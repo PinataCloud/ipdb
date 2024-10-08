@@ -1,47 +1,31 @@
-# Astro Starter Kit: Minimal
+## IPDB
 
-```sh
-npm create astro@latest -- --template minimal
+This is a conceptual app to build a distributed database with IPFS, smart contracts, and PGlite. Before deploying this app you will need to deploy the contract first which you can find [here](https://github.com/PinataCloud/ipdb-contract). To read more about the concepts and the explanation of this app check out the [blog post]!
+
+## Development
+
+First clone the repo and install dependencies
+
+```
+git clone https://github.com/PinataCloud/ipdb && cd ipdb && npm install
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+Rename the `.env.sample` to `.env` and fill out the environment variables.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```
+PINATA_JWT= # Your Pinata API key JWT 
+PRIVATE_KEY_1= # Private key of the wallet that deployed the contract
+PUBLIC_GATEWAY_URL= # Pinata gateway domain 
+PUBLIC_CONTRACT_ADDRESS= # Contract address for ipdb-contract
+PUBLIC_ALCHEMY_URL= # Alchemy node RPC
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Once the variables are filled in you can run the following command to run the dev server
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+```
+npm run dev
+```
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Deployment
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+This is an Astro repo that already includes a Vercel adapter for deployment, but you can choose from other deployment options [here](https://docs.astro.build/en/guides/deploy/).
