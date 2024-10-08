@@ -5,6 +5,7 @@ import { Input } from "./ui/input";
 import { Checkbox } from "./ui/checkbox";
 import { publicClient, pinata } from "@/utils/config";
 import { abi } from "@/utils/contract.json";
+import { checkDatabaseExists } from "@/utils/db";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useToast } from "@/hooks/use-toast";
 
@@ -17,33 +18,11 @@ interface ToDo {
 }
 
 export default function Database() {
-	const [todos, setTodos]: any = useState([]);
+	const [todos, setTodos] = useState<ToDo[]>([]);
 	const [taskName, setTaskName] = useState("");
 	const [loading, setLoading] = useState(true);
 	const [saving, setSaving] = useState(false);
 	const { toast } = useToast();
-
-	async function checkDatabaseExists(dbName: string): Promise<boolean> {
-		return new Promise((resolve, reject) => {
-			const request = indexedDB.open(dbName);
-
-			request.onsuccess = (event) => {
-				const db = (event.target as IDBOpenDBRequest).result;
-				db.close();
-				resolve(true);
-			};
-
-			request.onerror = (event) => {
-				reject(new Error("Error opening database"));
-			};
-
-			request.onupgradeneeded = (event) => {
-				const db = (event.target as IDBOpenDBRequest).result;
-				db.close();
-				resolve(false);
-			};
-		});
-	}
 
 	async function importDb() {
 		try {
@@ -72,7 +51,7 @@ export default function Database() {
 			const ret = await db?.query(`
 				SELECT * from todo ORDER BY id ASC;
 			`);
-			setTodos(ret?.rows);
+			setTodos(ret?.rows as ToDo[]);
 			toast({
 				title: "Database Restored",
 			});
@@ -143,7 +122,7 @@ export default function Database() {
 		}
 	}
 
-	function taskNameHandle(e: any) {
+	function taskNameHandle(e: React.ChangeEvent<HTMLInputElement>) {
 		setTaskName(e.target.value);
 	}
 
