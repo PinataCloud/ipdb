@@ -1,5 +1,7 @@
 import type { APIRoute } from "astro";
-import { pinata } from "../../utils/pinata";
+import { pinata, walletClient, publicClient } from "@/utils/config";
+import { account } from "@/utils/account";
+import { abi } from "@/utils/contract.json";
 
 export const POST: APIRoute = async ({ request }) => {
 	const data = await request.formData();
@@ -13,15 +15,20 @@ export const POST: APIRoute = async ({ request }) => {
 		);
 	}
 	const { IpfsHash } = await pinata.upload.file(file);
-	console.log(IpfsHash);
-	const swap = await pinata.gateways.swapCid({
-		cid: import.meta.env.PUBLIC_DB_CID,
-		swapCid: IpfsHash,
+	const { request: contractRequest } = await publicClient.simulateContract({
+		account,
+		address: import.meta.env.PUBLIC_CONTRACT_ADDRESS,
+		abi: abi,
+		functionName: "update",
+		args: [IpfsHash],
 	});
-	console.log(swap);
+	const tx = await walletClient.writeContract(contractRequest);
+	const transaction = await publicClient.waitForTransactionReceipt({
+		hash: tx,
+	});
 	return new Response(
 		JSON.stringify({
-			data: swap,
+			data: transaction.status,
 		}),
 		{ status: 200 },
 	);
