@@ -1,6 +1,6 @@
 import { PinataSDK } from "pinata-web3";
 import { createWalletClient, createPublicClient, http } from "viem";
-import { baseSepolia, sepolia, base } from "viem/chains";
+import { base } from "viem/chains";
 
 export const pinata = new PinataSDK({
 	pinataJwt: import.meta.env.PINATA_JWT,
